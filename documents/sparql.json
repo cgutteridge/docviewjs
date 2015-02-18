@@ -1,0 +1,173 @@
+{
+  "head": {
+    "vars": [
+      "s",
+      "p",
+      "o"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/site/wl"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://www.w3.org/ns/org#Site"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/site/wl"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#label"
+        },
+
+        "o": {
+          "type": "literal",
+          "value": "Wessex Lane Halls Complex"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/site/wl"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/dc/terms/description"
+        },
+
+        "o": {
+          "type": "literal",
+          "value": "The Wessex Lane Halls Complex consists of Stoneham Hall, Montefiore Hall and Connaught Hall. This set of halls are often just referred to collectively as \"Wessex Lane\"."
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/dataset/places/latest"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/dc/terms/conformsTo"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://openorg.ecs.soton.ac.uk/wiki/Places"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/dataset/places/latest"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/dc/terms/license"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://www.nationalarchives.gov.uk/doc/open-government-licence/"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/dataset/places/latest"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/dc/terms/subject"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://purl.org/openorg/theme/places"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/dataset/places/latest"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/openorg/contact"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "mailto:opendata@soton.ac.uk"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/dataset/places/latest"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://purl.org/openorg/organization"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/site/63"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://www.w3.org/ns/org#Site"
+        }
+      },
+      {
+        "s": {
+          "type": "uri",
+          "value": "http://id.southampton.ac.uk/site/63"
+        },
+
+        "p": {
+          "type": "uri",
+          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        },
+
+        "o": {
+          "type": "uri",
+          "value": "http://vocab.deri.ie/rooms#Site"
+        }
+      }
+    ]
+  }
+}

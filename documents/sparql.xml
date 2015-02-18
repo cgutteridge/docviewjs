@@ -1,0 +1,121 @@
+<sparql xmlns='http://www.w3.org/2005/sparql-results#' xmlns:q='http://www.openrdf.org/schema/qname#'>
+	<head>
+		<variable name='s'/>
+		<variable name='p'/>
+		<variable name='o'/>
+		<link href='info'/>
+	</head>
+	<results>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/site/wl</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://www.w3.org/ns/org#Site</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/site/wl</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2000/01/rdf-schema#label</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Wessex Lane Halls Complex</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/site/wl</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>The Wessex Lane Halls Complex consists of Stoneham Hall, Montefiore Hall and Connaught Hall. This set of halls are often just referred to collectively as "Wessex Lane".</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/dataset/places/latest</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/conformsTo</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://openorg.ecs.soton.ac.uk/wiki/Places</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/dataset/places/latest</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/license</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://www.nationalarchives.gov.uk/doc/open-government-licence/</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/dataset/places/latest</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/openorg/theme/places</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/dataset/places/latest</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/openorg/contact</uri>
+			</binding>
+			<binding name='o'>
+				<uri>mailto:opendata@soton.ac.uk</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/dataset/places/latest</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/openorg/organization</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.southampton.ac.uk/</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/site/63</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://www.w3.org/ns/org#Site</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='s'>
+				<uri>http://id.southampton.ac.uk/site/63</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://vocab.deri.ie/rooms#Site</uri>
+			</binding>
+		</result>
+	</results>
+</sparql>
+
