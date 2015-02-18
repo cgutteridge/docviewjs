@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<!--  Addapted from code from sheet.js -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Intent</title>
+<style>
+/* site style */
+#site-header {
+	background-color: blue;
+	height: 100px;
+	font-size: 200%;
+	color: white;
+}
+.viewer-button {
+	background: #ccc;
+	padding: 2px;
+	margin-left: 0.5em;
+	cursor: pointer;
+}
+#documents li {
+	margin-bottom: 0.5em;
+}
+
+/* plugin style */
+
+</style>
+<script src="lib/jquery.js"></script>
+</head>
+<body>
+
+<div id='site-header'>Some Repository</div>
+<div id='documents'>Documents:<ul>
+	<li><a href='documents/Tweets.xlsx'>Tweets.xlsx</a></li>
+	<li><a href='documents/eq.xlsx'>eq.xlsx</a></li>
+	<li><a href='documents/helloworld.txt'>helloworld.txt</a></li>
+</ul></div>
+
+<div id='explore'></div>
+
+<script>
+
+// add buttons to existing page. Not very clever about deciding what document URL can handle what plugins
+$(document).ready( function() {
+	$('#documents li a').each(function(i,e){
+		e=$(e);
+		var href = e.attr( 'href' );
+		// work out appropriate viewers
+		var viewers = [ 'xlsx', 'raw' ];
+		for( var i=0; i<viewers.length; i++ )
+		{
+			var button = $('<span class="viewer-button" data-url="'+href+'" data-viewer="'+viewers[i]+'">'+viewers[i]+'</span>');
+			button.click(function() {
+				callViewer( $(this).attr('data-url'), $(this).attr('data-viewer'), '#explore' );
+			});
+			e.after( button );
+		}
+	});
+
+});
+
+var viewers = {};
+
+function callViewer(rel_url, viewer, target)
+{
+	var viewer = viewers[viewer];
+	target=$(target);
+	var url = ""+document.location;
+	// strip filename and fragments
+	url = url.replace( /#.*$/,'').replace( /\/[^\/]+$/, '/' );
+	// add new filename or relative path to it (won't handle non relative paths, yet)
+	url += rel_url;
+	// should test that viewer really exists
+	target.html( 'Loading <i>'+url+'</i> using <i>'+viewer+'</i>' );
+	var jqxhr = $.ajax( { 
+		'url': url,
+		//'processData': false,
+		//'dataType': 'binary' ,
+ 		beforeSend: function( xhr ) {
+			xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+		}
+	} )
+	.success(function(data) {
+		viewer.display( data, target, rel_url, url );
+		if( viewer.hasOwnProperty( 'css' ) )
+		{
+			$('body').append( $('<style></style>').text( viewer.css.join( "\n" ) ) );
+		}
+	})
+	.fail(function(e,estr,ethrown) {
+		target.html( 'Error: '+estr+' :: '+ethrown );
+	})
+	.always(function() {
+		//alert( "finished" );
+	});
+	// Perform other work here ...
+	// Set another completion function for the request above
+	jqxhr.always(function() {
+		//alert( "second finished" );
+	});
+}
+
+// register plugin
+viewers['raw'] = {
+	// TODO better css class name scheme
+	display: function( data, target, url, ref )
+	{
+		var h2 = $('<h2>Raw content of <a href="'+url+'">'+ref+'</a></h2>');
+		var div = $('<div class="block"></div>');
+		div.text( data );
+		target.html( '' );
+		target.append( h2 );
+		target.append( div );
+	},
+	css: [
+		'.block { overflow-x: auto; font-family: monospace; background-color: #f0f0f0; padding: 1em; }'
+	]
+};
+
+viewers['xlsx'] = {
+	display: function( data, target, url, ref )
+	{
+		$.ajax( { 'url': 'lib/jszip.js', 'async': false } );
+		$.ajax( { 'url': 'lib/xlsx.js', 'async': false } );
+		$.ajax( { 'url': 'lib/jquery.dataTables.min.js', 'async': false } );
+		target.html();
+		target.append( '<link rel="stylesheet" href="lib/jquery.dataTables.min.css" />' );
+		var h2 = $('<h2>Tabular content of <a href="'+url+'">'+ref+'</a></h2>');
+		target.append( h2 );
+		target.append( $('<div id="tablespot"></div>' ) );
+
+		wb = XLSX.read(data, {type: 'binary'});
+		this.showSheet( wb.Sheets[ wb.SheetNames[0] ], 0 );
+		// sheet picker and header row changer would go here
+	},
+	showSheet: function( sheet, row_offset )
+	{
+		var table = $('<table></table>' );
+		$('#tablespot').html();
+		$('#tablespot').append( table );
+		var thead = $('<thead></thead>' );
+		table.append(thead);
+		var theadtr = $('<tr></tr>' );
+		thead.append(theadtr);
+
+		range = XLSX.utils.decode_range(sheet["!ref"]);
+		for(R=range.s.r + row_offset, C = range.s.c; C <= range.e.c; ++C) {
+			val = sheet[XLSX.utils.encode_cell({c:C,r:R})];
+			th = $('<th></th>');
+			theadtr.append(th);
+			if(!val) continue;
+			th.text(XLSX.utils.format_cell(val));
+		}
+
+		for (R = range.s.r + 1 + row_offset; R <= range.e.r; ++R) {
+			var tr = $('<tr></tr>' );
+			table.append(tr);
+			/* row index available as __rowNum__ */
+			for (C = range.s.c; C <= range.e.c; ++C) {
+				val = sheet[XLSX.utils.encode_cell({c: C,r: R})];
+				td = $('<td></td>');
+				tr.append(td);
+				if(!val) continue;
+				td.text(XLSX.utils.format_cell(val));
+  			}
+		}
+
+		table.DataTable();
+
+	}
+};
+//Category,Keywords,Tweet,Comments
+function process_wb(workbook) {
+
+	workbook.SheetNames.forEach(function(sheetName) {
+		var sheet = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+		for(i=0;i<sheet.length;++i)
+		{
+			row = $("<tr><td class='filter'>"+(sheet[i]["Category"]+" "+sheet[i]["Keywords"]+" "+sheet[i]["Tweet"]).toLowerCase()+"</td><td>"+sheet[i]["Category"]+"</td><td><a target='_blank' href=\"https://twitter.com/intent/tweet?text="+encodeURIComponent(sheet[i]["Tweet"])+"\">"+sheet[i]["Tweet"]+"</a> <span class='charcount'>("+sheet[i]["Tweet"].length+" chars, "+(140-sheet[i]["Tweet"].length)+" left)</span></td><td>"+sheet[i]["Keywords"]+"</td><td>"+sheet[i]["Comments"]+"</td></tr>");		 
+			$('#tweets').append(row);
+		}
+	});
+
+}
+
+function handleDrop(e) {
+	var data = e.target.result;
+	process_wb(wb);
+}
+
+</script>
+</body>
+</html>
+
