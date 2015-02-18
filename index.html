@@ -82,14 +82,20 @@ function callViewer(rel_url, viewer, target)
 		}
 	} )
 	.success(function(data) {
-		viewer.display( data, target, rel_url, url );
-		if( viewer.hasOwnProperty( 'css' ) )
+		try {
+			viewer.display( data, target, rel_url, url );
+			if( viewer.hasOwnProperty( 'css' ) )
+			{
+				$('body').append( $('<style></style>').text( viewer.css.join( "\n" ) ) );
+			}
+		}
+		catch( err )
 		{
-			$('body').append( $('<style></style>').text( viewer.css.join( "\n" ) ) );
+			target.text( "Render Error: "+err.message );
 		}
 	})
 	.fail(function(e,estr,ethrown) {
-		target.html( 'Error: '+estr+' :: '+ethrown );
+		target.html( 'Load Error: '+estr+' :: '+ethrown );
 	})
 	.always(function() {
 		//alert( "finished" );
@@ -114,7 +120,7 @@ viewers['raw'] = {
 		target.append( div );
 	},
 	css: [
-		'.block { overflow-x: auto; font-family: monospace; background-color: #f0f0f0; padding: 1em; }'
+		'.block { overflow-x: auto; font-family: monospace; background-color: #f0f0f0; padding: 1em; white-space: pre }'
 	]
 };
 
@@ -167,27 +173,12 @@ viewers['xlsx'] = {
 		}
 
 		table.DataTable();
+	},
+	css: [
+		'#tablespot td { vertical-align:top; background-color: #f8f8f8; border: solid 1px #fff}'
+	]
 
-	}
 };
-//Category,Keywords,Tweet,Comments
-function process_wb(workbook) {
-
-	workbook.SheetNames.forEach(function(sheetName) {
-		var sheet = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-		for(i=0;i<sheet.length;++i)
-		{
-			row = $("<tr><td class='filter'>"+(sheet[i]["Category"]+" "+sheet[i]["Keywords"]+" "+sheet[i]["Tweet"]).toLowerCase()+"</td><td>"+sheet[i]["Category"]+"</td><td><a target='_blank' href=\"https://twitter.com/intent/tweet?text="+encodeURIComponent(sheet[i]["Tweet"])+"\">"+sheet[i]["Tweet"]+"</a> <span class='charcount'>("+sheet[i]["Tweet"].length+" chars, "+(140-sheet[i]["Tweet"].length)+" left)</span></td><td>"+sheet[i]["Keywords"]+"</td><td>"+sheet[i]["Comments"]+"</td></tr>");		 
-			$('#tweets').append(row);
-		}
-	});
-
-}
-
-function handleDrop(e) {
-	var data = e.target.result;
-	process_wb(wb);
-}
 
 </script>
 </body>
